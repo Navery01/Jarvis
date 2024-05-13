@@ -17,7 +17,7 @@ params = {
     "autoplay": True,
     "show_text": False,
     "remove_trailing_dots": False,
-    "voice": "Rogger.wav",
+    "voice": "Jarvis.wav",
     "language": "English",
     "model_name": "tts_models/multilingual/multi-dataset/xtts_v2",
 }
@@ -27,7 +27,7 @@ SAMPLE_RATE = 16000
 device = None
 
 # Set the default speaker name
-default_speaker_name = "Rogger"
+default_speaker_name = "Jarvis"
 
 if is_mac_os():
     device = torch.device('cpu')
@@ -92,6 +92,8 @@ with gr.Blocks() as app:
     
     with gr.Row():
         with gr.Column():
+            default_msg = "Even in the darkest nights, a single spark of hope can ignite the fire of determination within us, guiding us towards a future we dare to dream."
+            
             text_input = gr.Textbox(lines=2, label="Speechify this Text",value="Even in the darkest nights, a single spark of hope can ignite the fire of determination within us, guiding us towards a future we dare to dream.")
             speed_slider = gr.Slider(label='Speed', minimum=0.1, maximum=1.99, value=0.8, step=0.01)
             language_dropdown = gr.Dropdown(list(languages.keys()), label="Language/Accent", value="English")
@@ -125,6 +127,11 @@ with gr.Blocks() as app:
         inputs=[text_input, speaker_dropdown, speed_slider, language_dropdown],
         outputs=audio_output
     )
+    
+    def return_tts(text_input):
+        output = gen_voice(string=text_input, spk=default_speaker_name, speed=0.8, english='English')
+        return output
 
-if __name__ == "__main__":
-    app.launch()
+# if __name__ == "__main__":
+#     return_tts("hello world")
+#     # app.launch()
