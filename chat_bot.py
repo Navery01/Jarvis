@@ -23,3 +23,5 @@ def transcribe(audio_file_path):
     print(f'Finished Transcription: {transcription.text}')
     return transcription.text
 
+text = input("Enter your message: ")
+print(get_response(text))
